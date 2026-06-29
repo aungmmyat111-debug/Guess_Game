@@ -13,7 +13,7 @@
         <p>Guess a number between 1 - 20, you have 5 chances.</p>
         
         <div class="input">
-            <input type="text" id="guess-input">
+            <input type="text" id="guess-input" placeholder="Please type 1 - 20...">
             <br>
             <button id="btn-guess">Guess!</button>
             <button id="btn-restart">Restart</button>
@@ -60,7 +60,7 @@
                 resultDisp.innerText = "You WIN";
                 toggleButtons(false);
             } else if (attemptsUsed >= maxAttempts) {
-                resultDisp.innerText = "You LOSE";
+                resultDisp.innerText = `You LOSE. The correct score is: ${targetValue}` ;
                 toggleButtons(false);
             } else {
                 resultDisp.innerText = `${userGuess} is too ${userGuess > targetValue ? 'high' : 'low'}`;
