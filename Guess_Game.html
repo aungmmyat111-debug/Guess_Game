@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Game</title>
+    <link rel="stylesheet" href="Guess_Game.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <h2>Guess Game</h2>
+        <p>Guess a number between 1 - 20, you have 5 chances.</p>
+        
+        <div class="input">
+            <input type="text" id="guess-input">
+            <br>
+            <button id="btn-guess">Guess!</button>
+            <button id="btn-restart">Restart</button>
+        </div>
+        <hr>
+        <div id="attempt-display" class="info-text">0/5</div>
+        <div id="result-display" class="info-text"></div>
+    </div>
+
+    <script>
+        let targetValue = 0, attemptsUsed = 0;
+        const maxAttempts = 5;
+
+        const input = document.getElementById("guess-input");
+        const attemptDisp = document.getElementById("attempt-display");
+        const resultDisp = document.getElementById("result-display");
+        const btnGuess = document.getElementById("btn-guess");
+        const btnRestart = document.getElementById("btn-restart");
+
+        function toggleButtons(isPlayState) {
+            btnGuess.style.display = isPlayState ? "inline-block" : "none";
+            btnRestart.style.display = isPlayState ? "none" : "inline-block";
+        }
+
+        function restartGame() {
+            toggleButtons(true);
+            input.value = "";
+            input.focus();
+            targetValue = Math.floor(Math.random() * 20) + 1;
+            attemptsUsed = 0;
+            attemptDisp.innerText = `0/${maxAttempts}`;
+            resultDisp.innerText = "";
+        }
+
+        function makeGuess() {
+            let val = input.value.trim();
+            if (val === "" || isNaN(val)) return;
+
+            let userGuess = parseInt(val);
+            attemptsUsed++;
+            attemptDisp.innerText = `Attempt ${attemptsUsed}/${maxAttempts}`;
+
+            if (userGuess === targetValue) {
+                resultDisp.innerText = "You WIN";
+                toggleButtons(false);
+            } else if (attemptsUsed >= maxAttempts) {
+                resultDisp.innerText = "You LOSE";
+                toggleButtons(false);
+            } else {
+                resultDisp.innerText = `${userGuess} is too ${userGuess > targetValue ? 'high' : 'low'}`;
+            }
+
+            input.value = "0";
+            input.focus();
+        }
+
+        btnRestart.addEventListener("click", restartGame);
+        btnGuess.addEventListener("click", makeGuess);
+
+        toggleButtons(false);
+    </script>
+</body>
+</html>
